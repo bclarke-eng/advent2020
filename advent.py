@@ -6,9 +6,11 @@ import re
 with open("data1.txt", "r") as f:
     num_list = [int(number) for number in f.read().split()]
 
+# Part 1
 # Finds two different numbers in the data that add to 2020 and prints their product
 print("Multiple for 2 numbers:", [x * y for i, x in enumerate(num_list) for j, y in enumerate(num_list) if (i != j and x + y == 2020)][0])
 
+# Part 2
 # Finds three different numbers in the data that add to 2020 and prints their product
 print("Multiple for 3 numbers:", [x * y * z for i, x in enumerate(num_list) for j, y in enumerate(num_list) for k, z in enumerate(num_list) if (i != j != k and x + y + z == 2020)][0])
 # -------------------------------------------------------------------------------------------------------
@@ -19,7 +21,8 @@ print("Multiple for 3 numbers:", [x * y * z for i, x in enumerate(num_list) for 
 with open("data2.txt", "r") as g:
     password_list = [password for password in g.read().splitlines()]
 
-valid_passwords = 0
+old_valid_passwords = 0
+new_valid_passwords = 0
 
 for word in password_list:
     # Regex search to find needed information
@@ -29,7 +32,15 @@ for word in password_list:
     policy_letter = list_item[4]
     pass_word = list_item[6]
 
+    # Part 1
     if policy_min_number <= pass_word.count(policy_letter) <= policy_max_number:
-        valid_passwords += 1
+        old_valid_passwords += 1
 
-print("Number of valid passwords:", valid_passwords)
+    # Part 2
+    password_letters = list(pass_word)
+    if (password_letters[policy_min_number - 1] == policy_letter and password_letters[policy_max_number - 1] != policy_letter) \
+            or (password_letters[policy_min_number - 1] != policy_letter and password_letters[policy_max_number - 1] == policy_letter):
+        new_valid_passwords += 1
+
+print("Number of old valid passwords:", old_valid_passwords)
+print("Number of new valid passwords:", new_valid_passwords)
